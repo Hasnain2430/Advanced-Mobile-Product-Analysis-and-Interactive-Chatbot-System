@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+
+      .toggle-bar {
+        width: 100%;
+        text-align: center;
+        position: fixed;
+        top: 20px;
+        background-color: #f5f5f5;
+        padding: 10px 0;
+        z-index: 999;
+      }
+
+      .toggle-bar a {
+        text-decoration: none;
+        padding: 10px 20px;
+        margin: 0 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #ccc;
+        color: #333;
+      }
+
+      .toggle-bar a.active {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      #dashboard-content {
+        width: 90%;
+        margin: 100px auto; /* Center align the dashboard content */
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        width: 10%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      th:nth-child(3),
+      td:nth-child(3),
+      th:nth-child(7),
+      td:nth-child(7) {
+        width: 15%; /* Increase width for 'Product Name' and 'Total Questions Answered' columns */
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      h1 {
+        text-align: center; /* Center align the 'Product Listing' heading */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toggle-bar">
+      <a href="/">Home</a>
+      <a href="/dashboard" class="active">Dashboard</a>
+    </div>
+
+    <div id="dashboard-content">
+      <!-- First pair of images side by side -->
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="display: inline-block; margin-right: 10px;">
+          <img src="{{ url_for('static', filename='line_graph.jpg') }}" alt="Line Chart" style="width: 500px; height: auto;">
+        </div>
+        <div style="display: inline-block; margin-right: 10px;">
+          <img src="{{ url_for('static', filename='bar_graph.jpg') }}" alt="Line Chart" style="width: 500px; height: auto;">
+        </div>
+      </div>
+
+      <!-- Second pair of images side by side -->
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="display: inline-block; margin-right: 10px;">
+          <img src="{{ url_for('static', filename='graph2.png') }}" alt="Line Chart" style="width: 500px; height: auto;">
+        </div>
+        <div style="display: inline-block;">
+          <img src="{{ url_for('static', filename='count.png') }}" alt="Line Chart" style="width: 500px; height: auto;">
+        </div>
+      </div>
+      <h1>Product Listing</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Company</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Total Ratings</th>
+            <th>Total Q/A</th>
+            <th>Specifications</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data %}
+          <tr>
+            <td>{{ row['Product ID'] }}</td>
+            <td>{{ row['Company'] }}</td>
+            <td>{{ row['Product Name'] }}</td>
+            <td>{{ row['Price'] }}</td>
+            <td>{{ row['Rating'] }}</td>
+            <td>{{ row['Total Ratings'] }}</td>
+            <td>{{ row['Total Questions Answered'] }}</td>
+            <td>{{ row['Specifications'] }}</td>
+            <td><a href="{{ row['Link'] }}">Product Link</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

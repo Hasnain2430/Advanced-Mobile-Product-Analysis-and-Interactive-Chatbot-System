@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot Interface</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #f5f5f5;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #f5f5f5;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      #chat-container {
+        width: 400px;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        padding: 20px;
+      }
+
+      #chat-messages {
+        padding: 10px;
+        overflow-y: auto;
+        max-height: 300px;
+      }
+
+      #user-input {
+        padding: 10px;
+        border-top: 1px solid #ccc;
+        display: flex;
+        justify-content: center;
+      }
+
+      #input-text {
+        flex: 1;
+        padding: 8px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        color: #333;
+      }
+
+      #send-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 24px; 
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px; 
+}
+
+#send-button:hover {
+    background-color: #45a049;
+}
+
+      .toggle-bar {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .toggle-bar a {
+        text-decoration: none;
+        padding: 10px 20px;
+        margin: 0 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #ccc;
+        color: #333;
+      }
+
+      .toggle-bar a.active {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 20px 0;
+        color: #333;
+      }
+
+      table {
+        width: 90%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 5px;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      th:nth-child(3),
+      td:nth-child(3),
+      th:nth-child(7),
+      td:nth-child(7) {
+        width: 15%;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      #additional-search {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      #additional-input-text {
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        color: #333;
+        width: 300px;
+      }
+
+      #additional-send-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #additional-send-button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toggle-bar">
+      <a href="/" class="active">Home</a>
+      <a href="/dashboard">Dashboard</a>
+    </div>
+
+    <div id="chat-container">
+      <h1>Daraz Chatbot</h1>
+      <p style="margin: 10px 0">Search Up A Phone Of Your Choice</p>
+
+      <div id="chat-messages"></div>
+
+      <div id="user-input">
+        <form method="POST">
+            <input
+                type="text"
+                id="input-text"
+                name="query"
+                placeholder="Enter Here..."
+            />
+            <button type="submit" id="send-button">Send</button>
+        </form>
+    </div>
+    </div>
+
+    <form method="POST" id="additional-search">
+      <input
+        type="text"
+        id="additional-input-text"
+        name="additional-query"  
+        placeholder="Enter Product ID For Reviews"
+      />
+      <button type="submit" id="additional-send-button">Search</button>
+    </form>
+
+    {% if data %}
+    <table style="margin-top: 30px">
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Company</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Rating</th>
+          <th>Total Ratings</th>
+          <th>Total Q/A</th>
+          <th>Specifications</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data %}
+        <tr>
+          <td>{{ row['Product ID'] }}</td>
+          <td>{{ row['Company'] }}</td>
+          <td>{{ row['Product Name'] }}</td>
+          <td>{{ row['Price'] }}</td>
+          <td>{{ row['Rating'] }}</td>
+          <td>{{ row['Total Ratings'] }}</td>
+          <td>{{ row['Total Questions Answered'] }}</td>
+          <td>{{ row['Specifications'] }}</td>
+          <td><a href="{{ row['Link'] }}">Product Link</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <form method="POST" id="additional-search">
+      <input
+        type="text"
+        id="additional-input-text"
+        name="additional-query"  
+        placeholder="Enter Product ID For Reviews"
+      />
+      <button type="submit" id="additional-send-button">Search</button>
+    </form>
+        </div>
+    {% endif %}
+  </body>
+</html>
