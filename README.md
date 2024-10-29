@@ -1,0 +1,2 @@
+# Advanced-Mobile-Product-Analysis-and-Interactive-Chatbot-System
+A project that integrates web scraping, data storage, chatbot, and dashboard. It extracts mobile product data from Daraz.pk, storing info and reviews. An AI chatbot lets users find phones within budgets, while an interactive dashboard shows insights like prices, ratings, and top products, built with Python, Flask for data analysis and engagement.
